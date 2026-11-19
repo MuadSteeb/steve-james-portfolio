@@ -27,6 +27,21 @@
       if (!condition) failures.push(message);
     }
 
+    function waitForImage(image) {
+      return new Promise((resolve, reject) => {
+        const deadline = Date.now() + 10000;
+        const timer = setInterval(() => {
+          if (image.complete && image.naturalWidth > 0) {
+            clearInterval(timer);
+            resolve();
+          } else if (Date.now() > deadline) {
+            clearInterval(timer);
+            reject(new Error(`Image did not load: ${image.currentSrc || image.src}`));
+          }
+        }, 50);
+      });
+    }
+
     async function run() {
       for (const width of [320, 390, 768, 1440]) {
         const frame = document.createElement("iframe");
@@ -50,6 +65,8 @@
         check(doc.querySelectorAll(".video-stage iframe").length === 0, `${width}px: no player loaded before interaction`);
         const portrait = doc.querySelector(".portrait");
         await portrait.decode();
+        // A responsive source can be reselected after the frame's initial load.
+        await waitForImage(portrait);
         check(portrait.complete && portrait.naturalWidth > 0, `${width}px: portrait loads`);
         const cards = [...doc.querySelectorAll(".project")];
         const first = cards[0].getBoundingClientRect();

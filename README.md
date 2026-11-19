@@ -46,7 +46,7 @@ python3 -m unittest discover -s tests -v
 ```
 
 For browser interaction and layout checks, run the local server and open
-http://127.0.0.1:8000/tests/browser.html. The harness checks 390px mobile,
+http://127.0.0.1:8000/tests/browser.html. The harness checks 320px and 390px mobile,
 768px tablet, and 1440px desktop layouts, navigation, video activation/closing,
 and project associations. Also review the actual site visually at these widths.
 
