@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Portfolio browser checks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font: 16px/1.5 monospace; background: #eee; color: #111; margin: 24px; }
+    iframe { display: block; border: 1px solid #555; margin-top: 20px; height: 900px; }
+    .pass { color: #176325; }
+    .fail { color: #a00000; }
+  </style>
+</head>
+<body data-result="running">
+  <h1>Portfolio browser checks</h1>
+  <p>Checks the real site in mobile, tablet, and desktop frames. No test libraries required.</p>
+  <ol id="results"></ol>
+  <script>
+    const results = document.querySelector("#results");
+    const failures = [];
+
+    function check(condition, message) {
+      const item = document.createElement("li");
+      item.className = condition ? "pass" : "fail";
+      item.textContent = `${condition ? "PASS" : "FAIL"}: ${message}`;
+      results.append(item);
+      if (!condition) failures.push(message);
+    }
+
+    async function run() {
+      for (const width of [320, 390, 768, 1440]) {
+        const frame = document.createElement("iframe");
+        frame.width = width;
+        frame.title = `Portfolio at ${width}px`;
+        const loaded = new Promise((resolve, reject) => {
+          const timeout = setTimeout(() => reject(new Error(`Frame timed out at ${width}px`)), 15000);
+          frame.onload = () => { clearTimeout(timeout); resolve(); };
+        });
+        frame.src = "../index.html";
+        document.body.append(frame);
+        await loaded;
+        const doc = frame.contentDocument;
+        const win = frame.contentWindow;
+        await doc.fonts.ready;
+        // Screenshots and checks must not depend on smooth-scroll timing.
+        doc.documentElement.style.scrollBehavior = "auto";
+
+        check(doc.documentElement.scrollWidth === win.innerWidth, `${width}px: no horizontal overflow`);
+        check(doc.querySelectorAll(".project").length === 8, `${width}px: all eight projects rendered`);
+        check(doc.querySelectorAll(".video-stage iframe").length === 0, `${width}px: no player loaded before interaction`);
+        const portrait = doc.querySelector(".portrait");
+        await portrait.decode();
+        check(portrait.complete && portrait.naturalWidth > 0, `${width}px: portrait loads`);
+        const cards = [...doc.querySelectorAll(".project")];
+        const first = cards[0].getBoundingClientRect();
+        const second = cards[1].getBoundingClientRect();
+        check(width <= 760 ? second.top > first.bottom : second.top === first.top,
+          `${width}px: correct one/two-column layout`);
+        check(cards.every(card => {
+          const video = card.querySelector(".video").getBoundingClientRect();
+          const heading = card.querySelector("h3").getBoundingClientRect();
+          const description = card.querySelector(".description").getBoundingClientRect();
+          const bounds = card.getBoundingClientRect();
+          return video.bottom <= heading.top && heading.bottom <= description.top && description.bottom <= bounds.bottom;
+        }), `${width}px: each video stays with its heading and description`);
+
+        const menu = doc.querySelector(".menu-toggle");
+        const nav = doc.querySelector(".site-nav");
+        check(nav.hidden && !menu.hidden, `${width}px: menu starts collapsed`);
+        menu.click();
+        check(!nav.hidden && menu.getAttribute("aria-expanded") === "true", `${width}px: menu opens`);
+        doc.dispatchEvent(new win.KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+        check(nav.hidden && doc.activeElement === menu, `${width}px: Escape closes and restores focus`);
+        menu.click();
+        doc.querySelector('nav a[href="#work"]').click();
+        check(nav.hidden && win.location.hash === "#work", `${width}px: work link navigates and closes menu`);
+        menu.click();
+        doc.querySelector("main").click();
+        check(nav.hidden, `${width}px: outside click closes menu`);
+
+        const videos = [...doc.querySelectorAll(".video")];
+        for (const video of videos) {
+          video.querySelector(".video-poster").click();
+          const player = video.querySelector("iframe");
+          check(player?.src.startsWith(`https://www.youtube-nocookie.com/embed/${video.dataset.video}?`)
+            && player.title === video.dataset.title && player.allowFullscreen,
+            `${width}px: ${video.dataset.video} opens its correctly labelled player`);
+          check(doc.querySelectorAll(".video-stage iframe").length === 1,
+            `${width}px: only the selected video is active`);
+        }
+        const last = videos[videos.length - 1];
+        last.querySelector(".close-video").click();
+        check(doc.querySelectorAll(".video-stage iframe").length === 0
+          && doc.activeElement === last.querySelector(".video-poster"),
+          `${width}px: closing removes the player and restores focus`);
+        frame.remove();
+      }
+      document.body.dataset.result = failures.length ? "failed" : "passed";
+      document.title = `${failures.length ? "FAIL" : "PASS"} - Portfolio browser checks`;
+    }
+
+    run().catch(error => {
+      check(false, error.message);
+      document.body.dataset.result = "failed";
+    });
+  </script>
+</body>
+</html>
