@@ -7,7 +7,6 @@ from urllib.parse import parse_qs, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 VIDEOS = {
-    "RCFEqGYVhOE": "Behind the scenes of GitHub Universe 2024",
     "P6Va0_KILi4": "Universe Day 2 Keynote - 2025",
     "rRRXZTnJ22A": "GitHub Galaxy Virtual Keynote - 2023",
     "CyWoCxQtlZ8": "AMD x GitHub Customer Story - 2025",
@@ -16,6 +15,12 @@ VIDEOS = {
     "kjqk153yf64": "GitHub Universe Event Recap Sizzle - 2026",
     "0ZGKn4VfC74": "TQ Ventures Podcast - 2026",
     "8opU-MX7uGY": "Tuva AI company launch - 2026",
+    "RCFEqGYVhOE": "Behind the scenes of GitHub Universe 2024",
+}
+LOCAL_POSTERS = {
+    "P6Va0_KILi4": "./assets/universe-keynote.jpg",
+    "rRRXZTnJ22A": "./assets/galaxy-keynote.jpg",
+    "RCFEqGYVhOE": "./assets/universe-documentary.jpg",
 }
 
 
@@ -38,7 +43,7 @@ class SiteTests(unittest.TestCase):
     def test_video_associations_and_order(self):
         videos = [
             (attrs["data-video"], attrs["data-title"])
-            for tag, attrs in self.doc.elements if tag == "figure"
+            for tag, attrs in self.doc.elements if tag == "figure" and "data-video" in attrs
         ]
         self.assertEqual(videos, list(VIDEOS.items()))
         links = [
@@ -48,7 +53,10 @@ class SiteTests(unittest.TestCase):
         ]
         for video_id in VIDEOS:
             self.assertEqual(links.count(video_id), 2)
-            self.assertIn(f"https://i.ytimg.com/vi/{video_id}/hqdefault.jpg", self.html)
+            self.assertIn(
+                LOCAL_POSTERS.get(video_id, f"https://i.ytimg.com/vi/{video_id}/hqdefault.jpg"),
+                self.html,
+            )
 
     def test_accessible_document(self):
         elements = self.doc.elements

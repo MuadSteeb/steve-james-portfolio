@@ -43,7 +43,7 @@
     }
 
     async function run() {
-      for (const width of [320, 390, 768, 1440]) {
+      for (const width of [320, 390, 600, 768, 900, 901, 1440]) {
         const frame = document.createElement("iframe");
         frame.width = width;
         frame.title = `Portfolio at ${width}px`;
@@ -60,40 +60,69 @@
         // Screenshots and checks must not depend on smooth-scroll timing.
         doc.documentElement.style.scrollBehavior = "auto";
 
-        check(doc.documentElement.scrollWidth === win.innerWidth, `${width}px: no horizontal overflow`);
+        check(doc.documentElement.scrollWidth <= win.innerWidth + 1, `${width}px: no horizontal overflow`);
         check(doc.querySelectorAll(".project").length === 8, `${width}px: all eight projects rendered`);
         check(doc.querySelectorAll(".video-stage iframe").length === 0, `${width}px: no player loaded before interaction`);
         const portrait = doc.querySelector(".portrait");
-        await portrait.decode();
         // A responsive source can be reselected after the frame's initial load.
         await waitForImage(portrait);
         check(portrait.complete && portrait.naturalWidth > 0, `${width}px: portrait loads`);
         const cards = [...doc.querySelectorAll(".project")];
         const first = cards[0].getBoundingClientRect();
         const second = cards[1].getBoundingClientRect();
-        check(width <= 760 ? second.top > first.bottom : second.top === first.top,
-          `${width}px: correct one/two-column layout`);
+        check(width <= 600 ? second.top > first.bottom : second.top === first.top,
+          `${width}px: correct featured layout`);
+        const gallery = [...doc.querySelectorAll(".supporting-grid .project")];
+        const rowStart = gallery[0].getBoundingClientRect().top;
+        const columns = gallery.filter(card => card.getBoundingClientRect().top === rowStart).length;
+        check(columns === (width <= 600 ? 1 : width <= 900 ? 2 : 3),
+          `${width}px: supporting gallery column count`);
+        const sections = [...doc.querySelectorAll("main > section")];
+        check(sections.map(section => section.id).join(",") === ",work,feature,about",
+          `${width}px: work precedes documentary and biography`);
+        const hero = doc.querySelector(".hero");
+        check(hero.querySelectorAll("p").length === 2
+          && hero.querySelector(".button-link").getAttribute("href") === "#work",
+          `${width}px: short hero with a direct work CTA`);
         check(cards.every(card => {
           const video = card.querySelector(".video").getBoundingClientRect();
           const heading = card.querySelector("h3").getBoundingClientRect();
+          const details = card.querySelector("details");
+          check(!details.open, `${width}px: production story starts collapsed`);
+          details.querySelector("summary").click();
+          check(details.open, `${width}px: production story expands`);
           const description = card.querySelector(".description").getBoundingClientRect();
           const bounds = card.getBoundingClientRect();
-          return video.bottom <= heading.top && heading.bottom <= description.top && description.bottom <= bounds.bottom;
+          const contained = video.bottom <= heading.top + 1 && heading.bottom <= description.top + 1
+            && description.height > 0 && description.bottom <= bounds.bottom + 1;
+          details.querySelector("summary").click();
+          check(!details.open, `${width}px: production story collapses`);
+          return contained;
         }), `${width}px: each video stays with its heading and description`);
+        const experience = doc.querySelector(".experience");
+        experience.querySelector("summary").click();
+        check(experience.open && experience.querySelectorAll("p").length === 4,
+          `${width}px: complete GitHub narrative remains available`);
 
         const menu = doc.querySelector(".menu-toggle");
         const nav = doc.querySelector(".site-nav");
-        check(nav.hidden && !menu.hidden, `${width}px: menu starts collapsed`);
-        menu.click();
-        check(!nav.hidden && menu.getAttribute("aria-expanded") === "true", `${width}px: menu opens`);
-        doc.dispatchEvent(new win.KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
-        check(nav.hidden && doc.activeElement === menu, `${width}px: Escape closes and restores focus`);
-        menu.click();
-        doc.querySelector('nav a[href="#work"]').click();
-        check(nav.hidden && win.location.hash === "#work", `${width}px: work link navigates and closes menu`);
-        menu.click();
-        doc.querySelector("main").click();
-        check(nav.hidden, `${width}px: outside click closes menu`);
+        if (width <= 900) {
+          check(nav.hidden && !menu.hidden, `${width}px: menu starts collapsed`);
+          menu.click();
+          check(!nav.hidden && menu.getAttribute("aria-expanded") === "true", `${width}px: menu opens`);
+          doc.dispatchEvent(new win.KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+          check(nav.hidden && doc.activeElement === menu, `${width}px: Escape closes and restores focus`);
+          menu.click();
+          doc.querySelector('nav a[href="#work"]').click();
+          check(nav.hidden && win.location.hash === "#work", `${width}px: work link navigates and closes menu`);
+          menu.click();
+          doc.querySelector("main").click();
+          check(nav.hidden, `${width}px: outside click closes menu`);
+        } else {
+          check(!nav.hidden && menu.hidden, `${width}px: desktop navigation stays visible`);
+          doc.querySelector('nav a[href="#work"]').click();
+          check(!nav.hidden && win.location.hash === "#work", `${width}px: desktop navigation works`);
+        }
 
         const videos = [...doc.querySelectorAll(".video")];
         for (const video of videos) {
@@ -110,8 +139,43 @@
         check(doc.querySelectorAll(".video-stage iframe").length === 0
           && doc.activeElement === last.querySelector(".video-poster"),
           `${width}px: closing removes the player and restores focus`);
+        if (width === 1440) {
+          // Offscreen frames throttle resize events; bring the subject into view.
+          frame.scrollIntoView();
+          frame.width = 390;
+          frame.getBoundingClientRect();
+          await new Promise(resolve => win.requestAnimationFrame(resolve));
+          await new Promise(resolve => setTimeout(resolve, 200));
+          check(nav.hidden && !menu.hidden, "Resize to mobile collapses navigation");
+          menu.click();
+          frame.width = 1440;
+          frame.getBoundingClientRect();
+          await new Promise(resolve => win.requestAnimationFrame(resolve));
+          await new Promise(resolve => setTimeout(resolve, 200));
+          check(!nav.hidden && menu.hidden && menu.getAttribute("aria-expanded") === "false",
+            "Resize to desktop restores visible links and resets menu state");
+        }
         frame.remove();
       }
+      const fallback = document.createElement("iframe");
+      fallback.title = "Portfolio without JavaScript";
+      fallback.width = 390;
+      fallback.setAttribute("sandbox", "allow-same-origin");
+      const fallbackLoaded = new Promise(resolve => { fallback.onload = resolve; });
+      fallback.src = "../index.html";
+      document.body.append(fallback);
+      await fallbackLoaded;
+      const fallbackDoc = fallback.contentDocument;
+      check(!fallbackDoc.querySelector("nav").hidden
+        && fallbackDoc.querySelector(".menu-toggle").hidden,
+        "No JavaScript: navigation remains available");
+      check(fallbackDoc.querySelectorAll("a.video-poster").length === 9,
+        "No JavaScript: all nine videos retain direct watch links");
+      const fallbackStory = fallbackDoc.querySelector(".project-story");
+      fallbackStory.querySelector("summary").click();
+      check(fallbackStory.open && fallbackStory.querySelector(".description").getBoundingClientRect().height > 0,
+        "No JavaScript: production stories still expand");
+      fallback.remove();
       document.body.dataset.result = failures.length ? "failed" : "passed";
       document.title = `${failures.length ? "FAIL" : "PASS"} - Portfolio browser checks`;
     }

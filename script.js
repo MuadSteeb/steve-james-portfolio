@@ -1,14 +1,21 @@
 const menuToggle = document.querySelector(".menu-toggle");
 const navigation = document.querySelector("#site-navigation");
+const mobileNavigation = window.matchMedia("(max-width: 900px)");
 
 function closeMenu(restoreFocus = false) {
-  navigation.hidden = true;
+  navigation.hidden = mobileNavigation.matches;
   menuToggle.setAttribute("aria-expanded", "false");
   if (restoreFocus) menuToggle.focus();
 }
 
-closeMenu();
-menuToggle.hidden = false;
+function syncNavigation() {
+  closeMenu();
+  menuToggle.hidden = !mobileNavigation.matches;
+  navigation.classList.toggle("mobile-nav", mobileNavigation.matches);
+}
+
+syncNavigation();
+mobileNavigation.addEventListener("change", syncNavigation);
 document.documentElement.classList.add("navigation-ready");
 
 menuToggle.addEventListener("click", () => {
@@ -22,7 +29,7 @@ navigation.addEventListener("click", (event) => {
 });
 
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && !navigation.hidden) closeMenu(true);
+  if (event.key === "Escape" && mobileNavigation.matches && !navigation.hidden) closeMenu(true);
 });
 
 document.addEventListener("click", (event) => {

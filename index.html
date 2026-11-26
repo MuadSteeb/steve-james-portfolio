@@ -22,98 +22,87 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="header-inner">
-      <a class="wordmark" href="#top" aria-label="Steve James, back to top">Steve James</a>
+      <a class="wordmark" href="#top" aria-label="Steve James, back to top">Steve James<span aria-hidden="true">.</span></a>
       <button class="menu-toggle" type="button" aria-label="Menu" aria-controls="site-navigation" aria-expanded="false" hidden>
         <span></span><span></span><span></span>
       </button>
       <nav class="site-nav" id="site-navigation" aria-label="Main navigation">
-        <a href="#about">About Steve</a>
-        <a href="#feature">Behind the scenes</a>
-        <a href="#work">Recent work</a>
+        <a href="#work">Selected work</a>
+        <a href="#feature">The documentary</a>
+        <a href="#about">About</a>
       </nav>
     </div>
   </header>
 
   <main id="main">
-    <section class="hero container" id="about" aria-labelledby="intro-title">
-      <img class="portrait" src="./assets/steve-james.jpg"
-        srcset="./assets/steve-james-small.jpg 400w, ./assets/steve-james.jpg 749w"
-        sizes="(max-width: 460px) calc(100vw - 40px), (max-width: 760px) 420px, 510px"
-        width="749" height="552" fetchpriority="high"
-        alt="Steve James in black and white, standing in patterned light">
+    <section class="hero container" aria-labelledby="intro-title">
       <div class="intro">
-        <h1 id="intro-title">Hi! I'm Steve. Thanks for visiting my site.</h1>
-        <p>I am a San Francisco-based creative production leader with 20+ years of experience spanning live events, theater, video production, broadcast media, digital content, interactive installations, and emerging technologies.</p>
-        <p>In 2022 I founded an art and tech collective called Supermagenta. We're working on some short films and video games, but it's all very hush hush.</p>
-        <p>Most recently I have been leading content production for events at GitHub, among other things.</p>
+        <p class="eyebrow">Hi! I'm Steve.</p>
+        <h1 id="intro-title">Creative<br>production.<br><span>Live and<br>on screen.</span></h1>
+        <p class="hero-description">San Francisco-based creative production leader.<br>From the first idea to the final frame.</p>
+        <a class="button-link" href="#work">Explore my work <span aria-hidden="true">&#8600;</span></a>
       </div>
-    </section>
-
-    <section class="feature" id="feature" aria-labelledby="feature-title">
-      <div class="container">
-        <div class="section-heading">
-          <h2 id="feature-title">Hey, check this out...</h2>
-          <p>In 2024 we filmed a little documentary drama about producing GitHub Universe. I'm featured in it quite a bit.</p>
-        </div>
-        <figure class="video" data-video="RCFEqGYVhOE" data-title="Behind the scenes of GitHub Universe 2024">
-          <div class="video-stage">
-            <a class="video-poster" href="https://www.youtube.com/watch?v=RCFEqGYVhOE" aria-label="Play Behind the scenes of GitHub Universe 2024">
-              <img src="https://i.ytimg.com/vi/RCFEqGYVhOE/hqdefault.jpg"
-                srcset="https://i.ytimg.com/vi/RCFEqGYVhOE/hqdefault.jpg 480w, https://i.ytimg.com/vi/RCFEqGYVhOE/maxresdefault.jpg 1280w"
-                sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 1108px) calc(100vw - 48px), 1060px"
-                alt="" width="1280" height="720" loading="lazy" decoding="async">
-              <span class="play-icon" aria-hidden="true"></span>
-            </a>
-          </div>
-          <figcaption><a href="https://www.youtube.com/watch?v=RCFEqGYVhOE" target="_blank" rel="noopener noreferrer">Watch on YouTube <span aria-hidden="true">&#8599;</span><span class="visually-hidden"> (opens in a new tab)</span></a></figcaption>
-        </figure>
-        <div class="story">
-          <p class="lead">For the past eight years, I have been leading content production for events at GitHub.</p>
-          <p>This includes the annual flagship GitHub Universe event. My oversight includes space planning and production technology design and implementation for all stages, livestreams, video production spaces, and other onsite production. I also play executive producer or producer role in all production happening onsite, including marquee executive keynotes, breakout sessions, livestreams, podcasts, sizzle reels, etc. I also play producer for much of the design and motion graphic treatment that happens on screens throughout the venue (or venues), but sometimes I think the actual designers are just humoring me.</p>
-          <p>I also lead production on larger internal company events, including Company All-Hands, Revenue Kick Off (RKO) events, and exclusive Senior Leadership Summits.</p>
-          <p>And I produce and direct video and motion graphic packages outside of live event world. Whatever needs doing. I guess I stay pretty busy.</p>
-        </div>
-      </div>
+      <figure class="hero-portrait">
+        <img class="portrait" src="./assets/steve-james.jpg"
+          srcset="./assets/steve-james-small.jpg 400w, ./assets/steve-james.jpg 749w"
+          sizes="(max-width: 600px) calc(100vw - 48px), (max-width: 900px) 280px, 420px"
+          width="749" height="552" fetchpriority="high"
+          alt="Steve James in black and white, standing in patterned light">
+        <figcaption>Producer. Director. Collaborator.</figcaption>
+      </figure>
+      <div class="hero-footer"><span>Live events / Film / Broadcast / Emerging tech</span><span>Based in San Francisco</span></div>
     </section>
 
     <section class="work container" id="work" aria-labelledby="work-title">
       <div class="section-heading">
-        <h2 id="work-title">Some recent work...</h2>
-        <p>A few recent projects across the gamut of production disciplines</p>
+        <div><p class="eyebrow">01 / Selected work</p><h2 id="work-title">Made to be seen.<br>Built to be felt.</h2></div>
+        <p>Big stages. Small crews. A little of everything.<br>A selection across the production spectrum.</p>
       </div>
-      <div class="project-grid">
+      <div class="project-grid featured-grid">
         <article class="project" aria-labelledby="live-keynote">
           <figure class="video" data-video="P6Va0_KILi4" data-title="Universe Day 2 Keynote - 2025">
             <div class="video-stage">
               <a class="video-poster" href="https://www.youtube.com/watch?v=P6Va0_KILi4" aria-label="Play Universe Day 2 Keynote - 2025">
-                <img src="https://i.ytimg.com/vi/P6Va0_KILi4/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
+                <img src="./assets/universe-keynote.jpg"
+                  alt="" width="1280" height="720" loading="lazy" decoding="async">
                 <span class="play-icon" aria-hidden="true"></span>
               </a>
             </div>
             <figcaption><a href="https://www.youtube.com/watch?v=P6Va0_KILi4" target="_blank" rel="noopener noreferrer">Watch on YouTube <span aria-hidden="true">&#8599;</span><span class="visually-hidden"> (opens in a new tab)</span></a></figcaption>
           </figure>
-          <h3 id="live-keynote">Live Keynote</h3>
-          <p class="project-name">Universe Day 2 Keynote - 2025</p>
+          <p class="project-category">Live keynote <span>2025</span></p>
+          <h3 id="live-keynote">GitHub Universe</h3>
+          <p class="project-subtitle">Day 2 Keynote</p>
           <p class="role">Executive Producer, Production Lead</p>
+          <details class="project-story">
+            <summary>Behind the project<span class="visually-hidden">: Universe Day 2 Keynote - 2025</span></summary>
           <p class="description">I led design of the theater space from an empty shell of a building into a full keynote experience, including tech specifications and implementation, live demo tech, and livestreaming. Also played content producer for the session itself. This theater was designed to split into multiple breakout stages after the opening keynote.</p>
+          </details>
         </article>
 
         <article class="project" aria-labelledby="virtual-keynote">
           <figure class="video" data-video="rRRXZTnJ22A" data-title="GitHub Galaxy Virtual Keynote - 2023">
             <div class="video-stage">
               <a class="video-poster" href="https://www.youtube.com/watch?v=rRRXZTnJ22A" aria-label="Play GitHub Galaxy Virtual Keynote - 2023">
-                <img src="https://i.ytimg.com/vi/rRRXZTnJ22A/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async">
+                <img src="./assets/galaxy-keynote.jpg"
+                  alt="" width="1280" height="720" loading="lazy" decoding="async">
                 <span class="play-icon" aria-hidden="true"></span>
               </a>
             </div>
             <figcaption><a href="https://www.youtube.com/watch?v=rRRXZTnJ22A" target="_blank" rel="noopener noreferrer">Watch on YouTube <span aria-hidden="true">&#8599;</span><span class="visually-hidden"> (opens in a new tab)</span></a></figcaption>
           </figure>
-          <h3 id="virtual-keynote">Virtual Keynote</h3>
-          <p class="project-name">GitHub Galaxy Virtual Keynote - 2023</p>
+          <p class="project-category">Virtual keynote <span>2023</span></p>
+          <h3 id="virtual-keynote">GitHub Galaxy</h3>
+          <p class="project-subtitle">Virtual Keynote</p>
           <p class="role">Executive Producer, Director</p>
+          <details class="project-story">
+            <summary>Behind the project<span class="visually-hidden">: GitHub Galaxy Virtual Keynote - 2023</span></summary>
           <p class="description">Galaxy was a series of virtual events aimed primarily at an enterprise audience. This keynote was filmed with a small crew in GitHub's Seattle office on a tight budget and production schedule. We got scrappy with the motion graphics and used slide animations exported as video files with transparent backgrounds.</p>
+          </details>
         </article>
-
+      </div>
+      <div class="gallery-heading"><h3>More recent work</h3><span>Different formats. Same attention to detail.</span></div>
+      <div class="project-grid supporting-grid">
         <article class="project" aria-labelledby="customer-story">
           <figure class="video" data-video="CyWoCxQtlZ8" data-title="AMD x GitHub Customer Story - 2025">
             <div class="video-stage">
@@ -124,10 +113,13 @@
             </div>
             <figcaption><a href="https://www.youtube.com/watch?v=CyWoCxQtlZ8" target="_blank" rel="noopener noreferrer">Watch on YouTube <span aria-hidden="true">&#8599;</span><span class="visually-hidden"> (opens in a new tab)</span></a></figcaption>
           </figure>
-          <h3 id="customer-story">Customer Story</h3>
-          <p class="project-name">AMD x GitHub Customer Story - 2025</p>
+          <p class="project-category">Customer story <span>2025</span></p>
+          <h3 id="customer-story">AMD &times; GitHub</h3>
           <p class="role">Producer, Director</p>
+          <details class="project-story">
+            <summary>Behind the project<span class="visually-hidden">: AMD x GitHub Customer Story - 2025</span></summary>
           <p class="description">This customer story was filmed over the course of two days at AMD's main office in Toronto. It was a visually and acoustically challenging mainly-cubicles office so we filmed the majority of this across one atrium common space and one conference room. Cool people and a great Toronto-based crew.</p>
+          </details>
         </article>
 
         <article class="project" aria-labelledby="product-launch">
@@ -140,10 +132,13 @@
             </div>
             <figcaption><a href="https://www.youtube.com/watch?v=NlFA9Ky9FTM" target="_blank" rel="noopener noreferrer">Watch on YouTube <span aria-hidden="true">&#8599;</span><span class="visually-hidden"> (opens in a new tab)</span></a></figcaption>
           </figure>
-          <h3 id="product-launch">Product Launch</h3>
-          <p class="project-name">GitHub Copilot App Launch - 2026</p>
+          <p class="project-category">Product launch <span>2026</span></p>
+          <h3 id="product-launch">GitHub Copilot App</h3>
           <p class="role">Producer, Director</p>
+          <details class="project-story">
+            <summary>Behind the project<span class="visually-hidden">: GitHub Copilot App Launch - 2026</span></summary>
           <p class="description">This came in very hot and was planned with only a few days notice and filmed in under three hours with a small, nimble crew in GitHub's San Francisco office. Product UI was rigged very quickly in a combination of the actual product and After Effects while the piece itself was being edited.</p>
+          </details>
         </article>
 
         <article class="project" aria-labelledby="ai-video">
@@ -156,10 +151,13 @@
             </div>
             <figcaption><a href="https://www.youtube.com/watch?v=spGNNNY7RRM" target="_blank" rel="noopener noreferrer">Watch on YouTube <span aria-hidden="true">&#8599;</span><span class="visually-hidden"> (opens in a new tab)</span></a></figcaption>
           </figure>
-          <h3 id="ai-video">AI-assisted video</h3>
-          <p class="project-name">RKO Keynote Opening Animation - 2025</p>
+          <p class="project-category">AI-assisted video <span>2025</span></p>
+          <h3 id="ai-video">RKO Opening Animation</h3>
           <p class="role">Producer, Director</p>
+          <details class="project-story">
+            <summary>Behind the project<span class="visually-hidden">: RKO Keynote Opening Animation - 2025</span></summary>
           <p class="description">A pre-Keynote hype video made primarily with AI prompt engineering. The product UI was rigged with After Effects. All other visuals were rendered with a node-based AI video workflow running local models. AI video generation has come a long way and is a pretty amazing tool for certain use cases.</p>
+          </details>
         </article>
 
         <article class="project" aria-labelledby="event-recap">
@@ -172,10 +170,14 @@
             </div>
             <figcaption><a href="https://www.youtube.com/watch?v=kjqk153yf64" target="_blank" rel="noopener noreferrer">Watch on YouTube <span aria-hidden="true">&#8599;</span><span class="visually-hidden"> (opens in a new tab)</span></a></figcaption>
           </figure>
-          <h3 id="event-recap">Event Recap</h3>
-          <p class="project-name">GitHub Universe Event Recap Sizzle - 2026</p>
+          <p class="project-category">Event recap <span>2026</span></p>
+          <h3 id="event-recap">GitHub Universe Recap</h3>
+          <p class="project-subtitle">GitHub Universe Event Recap Sizzle</p>
           <p class="role">Executive Producer</p>
+          <details class="project-story">
+            <summary>Behind the project<span class="visually-hidden">: GitHub Universe Event Recap Sizzle - 2026</span></summary>
           <p class="description">A post-event recap sizzle intended as part content key message reiteration, part fomo inducer, part promo for the same event next year. Filmed entirely during the two-day event and delivered the next day by agency partners. The more production executing concurrently, the more broad the management pyramid.</p>
+          </details>
         </article>
 
         <article class="project" aria-labelledby="podcast">
@@ -188,10 +190,13 @@
             </div>
             <figcaption><a href="https://www.youtube.com/watch?v=0ZGKn4VfC74" target="_blank" rel="noopener noreferrer">Watch on YouTube <span aria-hidden="true">&#8599;</span><span class="visually-hidden"> (opens in a new tab)</span></a></figcaption>
           </figure>
-          <h3 id="podcast">Podcast</h3>
-          <p class="project-name">TQ Ventures Podcast - 2026</p>
+          <p class="project-category">Podcast <span>2026</span></p>
+          <h3 id="podcast">TQ Ventures</h3>
           <p class="role">Executive Producer, Director</p>
+          <details class="project-story">
+            <summary>Behind the project<span class="visually-hidden">: TQ Ventures Podcast - 2026</span></summary>
           <p class="description">A short social media clip of a much longer podcast-format show. This was the pilot episode, filmed as a one-off in a rental location. We wanted to keep it light and conversational, as opposed to getting into full podcast-studio SM7B territory.</p>
+          </details>
         </article>
 
         <article class="project" aria-labelledby="startup-launch">
@@ -204,19 +209,64 @@
             </div>
             <figcaption><a href="https://www.youtube.com/watch?v=8opU-MX7uGY" target="_blank" rel="noopener noreferrer">Watch on YouTube <span aria-hidden="true">&#8599;</span><span class="visually-hidden"> (opens in a new tab)</span></a></figcaption>
           </figure>
-          <h3 id="startup-launch">Startup Launch</h3>
-          <p class="project-name">Tuva AI company launch - 2026</p>
+          <p class="project-category">Startup launch <span>2026</span></p>
+          <h3 id="startup-launch">Introducing Tuva AI</h3>
           <p class="role">Executive Producer, Director</p>
+          <details class="project-story">
+            <summary>Behind the project<span class="visually-hidden">: Tuva AI company launch - 2026</span></summary>
           <p class="description">Tech startup launch video filmed between a rental location in Brooklyn and on campus at NYU with a small crew in a single day. We had some very loud, surprise construction across the street, so I had to run out and negotiate with the foreman for quiet windows when we could film interviews. A very New York situation.</p>
+          </details>
         </article>
       </div>
-      <p class="video-note">Video players load only when you press play. Playback connects to YouTube; thumbnails are served by YouTube.</p>
+      <p class="video-note">Video players load only when you press play. Playback and some thumbnails connect to YouTube.</p>
+    </section>
+
+    <section class="feature" id="feature" aria-labelledby="feature-title">
+      <div class="container">
+        <div class="section-heading">
+          <div><p class="eyebrow">02 / Behind the scenes</p><h2 id="feature-title">Before the lights<br>come on.</h2></div>
+          <p>In 2024 we filmed a little documentary drama about producing GitHub Universe. I'm featured in it quite a bit.</p>
+        </div>
+        <figure class="video documentary" data-video="RCFEqGYVhOE" data-title="Behind the scenes of GitHub Universe 2024">
+          <div class="video-stage">
+            <a class="video-poster" href="https://www.youtube.com/watch?v=RCFEqGYVhOE" aria-label="Watch the documentary: Behind the scenes of GitHub Universe 2024">
+              <img src="./assets/universe-documentary.jpg"
+                alt="" width="1280" height="720" loading="lazy" decoding="async">
+              <span class="play-icon" aria-hidden="true"></span>
+              <span class="documentary-overlay" aria-hidden="true"><span>A look behind the curtain</span><strong>Universe 7 Days Out</strong><span>Watch the documentary &#8599;</span></span>
+            </a>
+          </div>
+          <figcaption><a href="https://www.youtube.com/watch?v=RCFEqGYVhOE" target="_blank" rel="noopener noreferrer">Watch on YouTube <span aria-hidden="true">&#8599;</span><span class="visually-hidden"> (opens in a new tab)</span></a></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="about container" id="about" aria-labelledby="about-title">
+      <div class="about-heading">
+        <p class="eyebrow">03 / A little about me</p>
+        <h2 id="about-title">Whatever<br>needs doing.</h2>
+        <p class="about-note">20+ years of making things happen.<br>Still curious about what's next.</p>
+        <span class="about-mark" aria-hidden="true">&#10035;</span>
+      </div>
+      <div class="story">
+        <p class="lead">Hi! I'm Steve. Thanks for visiting my site.</p>
+        <p>I am a San Francisco-based creative production leader with 20+ years of experience spanning live events, theater, video production, broadcast media, digital content, interactive installations, and emerging technologies.</p>
+        <p>In 2022 I founded an art and tech collective called <span class="accent">Supermagenta</span>. We're working on some short films and video games, but it's all very hush hush.</p>
+        <p>Most recently I have been leading content production for events at GitHub, among other things.</p>
+        <details class="experience">
+          <summary>More about my work at GitHub</summary>
+          <p>For the past eight years, I have been leading content production for events at GitHub.</p>
+          <p>This includes the annual flagship GitHub Universe event. My oversight includes space planning and production technology design and implementation for all stages, livestreams, video production spaces, and other onsite production. I also play executive producer or producer role in all production happening onsite, including marquee executive keynotes, breakout sessions, livestreams, podcasts, sizzle reels, etc. I also play producer for much of the design and motion graphic treatment that happens on screens throughout the venue (or venues), but sometimes I think the actual designers are just humoring me.</p>
+          <p>I also lead production on larger internal company events, including Company All-Hands, Revenue Kick Off (RKO) events, and exclusive Senior Leadership Summits.</p>
+          <p>And I produce and direct video and motion graphic packages outside of live event world. Whatever needs doing. I guess I stay pretty busy.</p>
+        </details>
+      </div>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="footer-inner container">
-      <p>Thanks for visiting!</p>
+      <div><a class="wordmark" href="#top">Steve James<span aria-hidden="true">.</span></a><p>Thanks for visiting. See you at the next one.</p></div>
       <a href="#top">Back to top <span aria-hidden="true">&#8593;</span></a>
     </div>
   </footer>
